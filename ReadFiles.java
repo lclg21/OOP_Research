@@ -1,10 +1,15 @@
+/*
+* Class that is used to read files 
+*/
+
 import java.io.*;
 import java.lang.*;
 import java.util.*;
 
 public class ReadFiles{
-// creates a file object
-	File file = new File("ObjExample.java");
+	// creates a file object
+	// Will move to OOPJavaAnalyzer so that this class can be used to read any file
+	File file = new File("ObjExample.java"); 
 
 	/*
 	* @return true if file is a file, false otherwise
