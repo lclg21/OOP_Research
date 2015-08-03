@@ -7,7 +7,6 @@ public class ReadFiles{
 	File file = new File("ObjExample.java");
 
 	/*
-	* @param file, file to be read
 	* @return true if file is a file, false otherwise
 	*/
 	public boolean checkIsFile(){
@@ -15,7 +14,6 @@ public class ReadFiles{
 	}
 
 	/*
-	* @param file, file to be read
 	* @return number of lines in the file
 	*/
 	public int findLineNumber(){

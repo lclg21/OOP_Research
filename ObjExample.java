@@ -1,3 +1,8 @@
+/*
+* Simple java program used for testing how pure OOP 
+* of a language is by the program OOPJavaAnalyzer 
+*/
+
 // ObjExample.java
 class ObjExample
 {
