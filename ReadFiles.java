@@ -5,6 +5,7 @@
 import java.io.*;
 import java.lang.*;
 import java.util.*;
+import java.util.regex.*;
 
 public class ReadFiles{
     
@@ -57,16 +58,22 @@ public class ReadFiles{
      */
     public int countClassType(File file){
 	String line;
+	String[] words;
 	int count = 0;
+
 	if (checkIsFile(file)){
 	    try{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		while ( (line = reader.readLine()) != null){
-		    if (!lineIsValid(line)){
-			count++;
-		    }
-		    
+		    if (lineIsValid(line)){
+			words = line.split(" ");
+			Matcher m  = Pattern.compile("new | [(]new").matcher(line);
+			while(m.find()){
+			    count++;
+			}		
+		    }		    
 		}
+		
 	    }catch (Exception e){
 		System.out.println(e);
 	    }
@@ -76,6 +83,8 @@ public class ReadFiles{
 	}
 	return count;
     }
+
+
 }
     
 

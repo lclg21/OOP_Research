@@ -1,3 +1,4 @@
+
 /*
 * Simple java program used for testing how pure OOP 
 * of a language is by the program OOPJavaAnalyzer 
@@ -10,6 +11,7 @@ class ObjExample
    int i = 1;
    public static void main (String [] args)
    {
+
       // creates first object from the ObjExample class
       // obj1 is an instance of the class ObjExample
       ObjExample obj1 = new ObjExample ();
