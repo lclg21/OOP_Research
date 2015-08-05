@@ -22,7 +22,15 @@ public class OOPJavaAnalyzer{
 	System.out.println(file.checkIsFile(inputFile));	
 	System.out.println(file.countNewConstructorType(inputFile));
 	System.out.println(file.countInstanceOfClassType(inputFile));
-	System.out.println(file.countTypeAsLocalVariable(inputFile));
+	
+	int typeclass = file.countNewConstructorType(inputFile);
+	int instanceOfType = file.countInstanceOfClassType(inputFile);
+
+	int totalNumOfTypes = instanceOfType;
+
+	float percent = typeclass * 100f / totalNumOfTypes;
+
+	System.out.println(args[0] + " is " + percent + "% pure OOP Language");
     }
 
 }

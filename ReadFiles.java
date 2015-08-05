@@ -10,7 +10,7 @@ import java.util.regex.*;
 public class ReadFiles{
 
     //global array with class type names as elements.
-    public static String[] myClassArray = new String[50];
+    public static ArrayList<String> myClassArray = new ArrayList<String>();
     
     /*
      * @param file, file to be checked if exists
@@ -18,6 +18,18 @@ public class ReadFiles{
      */
     public boolean checkIsFile(File file){
 	return file.isFile();
+    }
+
+    /*
+     * @param string, adds the class used as type to the array
+     */
+    public void addToClassArray(String classType){
+	if (!myClassArray.contains(classType)){
+	    myClassArray.add(classType);
+	}
+	for (int i = 0; i < myClassArray.size(); i++){
+	    System.out.println(myClassArray);
+	}
     }
     
     /*
@@ -73,7 +85,9 @@ public class ReadFiles{
 			Matcher m  = Pattern.compile("new | [(]new").matcher(line);
 			while(m.find()){
 			    count++;
-			    //myClassArray.add(words[0]);
+			    //String str = words[1];
+			    //System.out.println(str);
+			    //addToClassArray(str);
 			}
 			
 		    }		    
