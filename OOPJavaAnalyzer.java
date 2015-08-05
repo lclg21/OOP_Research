@@ -8,14 +8,20 @@ import java.lang.*;
 import java.util.*;
 
 public class OOPJavaAnalyzer{
-	public static void main(String[] args){
-		ReadFiles file = new ReadFiles();
-		
-		// will read line by line and check to see if there are any primitive data types, 
-		// any wrappers that can be used instead of the primitive data types, or any communication
-		// with objects without calling their methods. All these points makes java not a pure OOP 
-		// language
+    public static void main(String[] args){
+	    
+	// checks to see if there is exactly one argument passed
+	if (args.length != 1){
+	    System.err.println("No file detected. Exactly one file required");
+	    System.exit(1);
 	}
+	
+	File inputFile  = new File(args[0]);
+
+	ReadFiles file = new ReadFiles();
+	System.out.println(file.checkIsFile(inputFile));	
+	System.out.println(file.countClassType(inputFile));
+    }
 
 }
 

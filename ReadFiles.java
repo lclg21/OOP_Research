@@ -7,36 +7,78 @@ import java.lang.*;
 import java.util.*;
 
 public class ReadFiles{
-	// creates a file object
-	// Will move to OOPJavaAnalyzer so that this class can be used to read any file
-	File file = new File("ObjExample.java"); 
-
-	/*
-	* @return true if file is a file, false otherwise
-	*/
-	public boolean checkIsFile(){
-		return file.isFile();
+    
+    /*
+     * @param file, file to be checked if exists
+     * @return true if file exists, false otherwise
+     */
+    public boolean checkIsFile(File file){
+	return file.isFile();
+    }
+    
+    /*
+     * @param file, file to be read
+     * @return number of lines in the file
+     */
+    public int findLineNumber(File file){
+	int lines = 0;
+	if (checkIsFile(file)){
+	    try{
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		while ( (reader.readLine()) != null){
+		    lines++;
+		} 
+	    }catch (Exception e){
+		System.out.println(e);
+	    }
+	    
+	}else{
+	    System.out.println("This is not a file");
 	}
-
-	/*
-	* @return number of lines in the file
-	*/
-	public int findLineNumber(){
-		int lines = 0;
-		if (checkIsFile()){
-			try{
-				BufferedReader reader = new BufferedReader(new FileReader(file));
-				while ( (reader.readLine()) != null){
-					lines++;
-				} 
-			}catch (Exception e){
-				System.out.println(e);
-			}
-
-		}else{
-			System.out.println("This is not a file");
+	return lines;
+    }
+    
+    /*
+     * @param line, string passed to be checked if it starts with //, /*, * 
+     * @return true if line is not a comment in java, false otherwise.
+     */
+    public boolean lineIsValid(String line){
+	if ( (line.trim().startsWith("//")) || (line.trim().startsWith("/*")) || (line.trim().startsWith("*")) ) {
+		return false;
+	}else{
+		return true;
+	}
+    }
+    
+    
+    /*
+     * @param file, file to be read
+     * @return number of classes used as type
+     */
+    public int countClassType(File file){
+	String line;
+	int count = 0;
+	if (checkIsFile(file)){
+	    try{
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		while ( (line = reader.readLine()) != null){
+		    if (!lineIsValid(line)){
+			count++;
+		    }
+		    
 		}
-		return lines;
+	    }catch (Exception e){
+		System.out.println(e);
+	    }
+	    
+	}else{
+	    System.out.println("This is not a file");
 	}
-
+	return count;
+    }
 }
+    
+
+
+
+
