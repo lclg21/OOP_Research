@@ -8,6 +8,9 @@ import java.util.*;
 import java.util.regex.*;
 
 public class ReadFiles{
+
+    //global array with class type names as elements.
+    public static String[] myClassArray = new String[50];
     
     /*
      * @param file, file to be checked if exists
@@ -54,9 +57,9 @@ public class ReadFiles{
     
     /*
      * @param file, file to be read
-     * @return number of classes used as type
+     * @return number of class types that are created by the'new' constructor. 
      */
-    public int countClassType(File file){
+    public int countNewConstructorType(File file){
 	String line;
 	String[] words;
 	int count = 0;
@@ -70,7 +73,9 @@ public class ReadFiles{
 			Matcher m  = Pattern.compile("new | [(]new").matcher(line);
 			while(m.find()){
 			    count++;
-			}		
+			    //myClassArray.add(words[0]);
+			}
+			
 		    }		    
 		}
 		
@@ -88,7 +93,7 @@ public class ReadFiles{
      * @param file, file to be read to check if there is any casting as a class
      * @return number of times there is a casting to a class
      */
-    public int countCastToClass(File file){
+    public int countInstanceOfClassType(File file){
 	int count = 0;
 	String line;
 	String words[];
@@ -98,12 +103,11 @@ public class ReadFiles{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
                 while ( (line = reader.readLine()) != null){
                     if (lineIsValid(line)){
-			words = line.split(" ");
-			String w  = words[0];
-			Matcher m  = Pattern.compile("[(]"+ w + "[)]").matcher(line);
-			while(m.find()){
-			    count++;
-			}    
+			//words = line.split(" ");
+			Matcher m  = Pattern.compile("instanceof").matcher(line);
+                        while(m.find()){
+                            count++;
+                        }
 		    }
 		}
 	    }catch (Exception e){
@@ -115,6 +119,32 @@ public class ReadFiles{
 	return count;
     }
 
+    public int countTypeAsLocalVariable(File file){
+	int count = 0;
+        String line;
+        String words[];
+	
+        if (checkIsFile(file)){
+            try{
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                while ( (line = reader.readLine()) != null){
+                    if (lineIsValid(line)){
+			words = line.split(" ");
+			if (words.length == 2 || words.length == 4){
+			    if (Character.isUpperCase(words[0].charAt(0))){
+				count++;
+			    }
+			}
+                    }
+                }
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }else{
+            System.out.println("This is not a file");
+        }
+        return count;
+    }
 }
     
 
