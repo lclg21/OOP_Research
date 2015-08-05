@@ -21,6 +21,7 @@ public class OOPJavaAnalyzer{
 	ReadFiles file = new ReadFiles();
 	System.out.println(file.checkIsFile(inputFile));	
 	System.out.println(file.countClassType(inputFile));
+	//System.out.println(file.countCastToClass(inputFile)); (Still needs some work)
     }
 
 }

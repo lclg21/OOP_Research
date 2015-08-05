@@ -15,6 +15,7 @@ class ObjExample
       // creates first object from the ObjExample class
       // obj1 is an instance of the class ObjExample
       ObjExample obj1 = new ObjExample ();
+      ObjExample obj3 = (ObjExample) obj1; 
       System.out.println ("obj1.i = " + obj1.i);
       obj1.printStmnt ();
       

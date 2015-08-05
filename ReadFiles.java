@@ -84,6 +84,36 @@ public class ReadFiles{
 	return count;
     }
 
+    /*
+     * @param file, file to be read to check if there is any casting as a class
+     * @return number of times there is a casting to a class
+     */
+    public int countCastToClass(File file){
+	int count = 0;
+	String line;
+	String words[];
+
+	if (checkIsFile(file)){
+	    try{
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+                while ( (line = reader.readLine()) != null){
+                    if (lineIsValid(line)){
+			words = line.split(" ");
+			String w  = words[0];
+			Matcher m  = Pattern.compile("[(]"+ w + "[)]").matcher(line);
+			while(m.find()){
+			    count++;
+			}    
+		    }
+		}
+	    }catch (Exception e){
+		System.out.println(e);
+	    }
+	}else{
+	    System.out.println("This is not a file");
+	}
+	return count;
+    }
 
 }
     
