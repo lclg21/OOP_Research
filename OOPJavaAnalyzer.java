@@ -19,9 +19,10 @@ public class OOPJavaAnalyzer{
 	File inputFile  = new File(args[0]);
 
 	ReadFiles file = new ReadFiles();
-	System.out.println(file.checkIsFile(inputFile));	
-	System.out.println(file.countNewConstructorType(inputFile));
-	System.out.println(file.countInstanceOfClassType(inputFile));
+  
+	System.out.println("new constructor class types: " + file.countNewConstructorType(inputFile));
+	System.out.println("instanceof class types:      " + file.countInstanceOfClassType(inputFile));
+	System.out.println("IsMethod:                    " + file.countClassTypesAsParameters(inputFile));
 	
 	int typeclass = file.countNewConstructorType(inputFile);
 	int instanceOfType = file.countInstanceOfClassType(inputFile);

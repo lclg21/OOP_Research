@@ -27,9 +27,9 @@ public class ReadFiles{
 	if (!myClassArray.contains(classType)){
 	    myClassArray.add(classType);
 	}
-	for (int i = 0; i < myClassArray.size(); i++){
-	    System.out.println(myClassArray);
-	}
+     
+	System.out.println(myClassArray);
+	
     }
     
     /*
@@ -66,6 +66,18 @@ public class ReadFiles{
 	}
     }
     
+    /*
+     * @param line, string to be checked if its the beginning of method. 
+     * @return true if line is the beginning of a method, false otherwise.
+     */
+    public boolean isMethod(String line){
+	if ( (line.trim().startsWith("public")) || (line.trim().startsWith("private")) || (line.trim().startsWith("protected")) ){
+	    return true;
+	}else{
+	    return false;
+	}
+    }
+
     
     /*
      * @param file, file to be read
@@ -75,6 +87,7 @@ public class ReadFiles{
 	String line;
 	String[] words;
 	int count = 0;
+	int index = 0;
 
 	if (checkIsFile(file)){
 	    try{
@@ -85,11 +98,7 @@ public class ReadFiles{
 			Matcher m  = Pattern.compile("new | [(]new").matcher(line);
 			while(m.find()){
 			    count++;
-			    //String str = words[1];
-			    //System.out.println(str);
-			    //addToClassArray(str);
 			}
-			
 		    }		    
 		}
 		
@@ -117,7 +126,7 @@ public class ReadFiles{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
                 while ( (line = reader.readLine()) != null){
                     if (lineIsValid(line)){
-			//words = line.split(" ");
+			words = line.split(" ");
 			Matcher m  = Pattern.compile("instanceof").matcher(line);
                         while(m.find()){
                             count++;
@@ -133,7 +142,7 @@ public class ReadFiles{
 	return count;
     }
 
-    public int countTypeAsLocalVariable(File file){
+    public int countClassTypesAsParameters(File file){
 	int count = 0;
         String line;
         String words[];
@@ -143,11 +152,9 @@ public class ReadFiles{
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 while ( (line = reader.readLine()) != null){
                     if (lineIsValid(line)){
-			words = line.split(" ");
-			if (words.length == 2 || words.length == 4){
-			    if (Character.isUpperCase(words[0].charAt(0))){
-				count++;
-			    }
+			if (isMethod(line)){
+			    count++;
+			    words = line.split(" ");
 			}
                     }
                 }
