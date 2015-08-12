@@ -17,19 +17,18 @@ public class ReadFiles{
      * @return true if file exists, false otherwise
      */
     public boolean checkIsFile(File file){
-	return file.isFile();
+		return file.isFile();
     }
 
     /*
      * @param string, adds the class used as type to the array
      */
     public void addToClassArray(String classType){
-	if (!myClassArray.contains(classType)){
-	    myClassArray.add(classType);
-	}
+		if (!myClassArray.contains(classType)){
+	    	myClassArray.add(classType);
+		}
      
-	System.out.println(myClassArray);
-	
+		System.out.println(myClassArray);
     }
     
     /*
@@ -37,21 +36,21 @@ public class ReadFiles{
      * @return number of lines in the file
      */
     public int findLineNumber(File file){
-	int lines = 0;
-	if (checkIsFile(file)){
-	    try{
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		while ( (reader.readLine()) != null){
-		    lines++;
-		} 
+		int lines = 0;
+		if (checkIsFile(file)){
+	    	try{
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			while ( (reader.readLine()) != null){
+		    	lines++;
+			} 
 	    }catch (Exception e){
-		System.out.println(e);
+			System.out.println(e);
 	    }
 	    
-	}else{
-	    System.out.println("This is not a file");
-	}
-	return lines;
+		}else{
+	    	System.out.println("This is not a file");
+		}
+		return lines;
     }
     
     /*
@@ -59,23 +58,30 @@ public class ReadFiles{
      * @return true if line is not a comment in java, false otherwise.
      */
     public boolean lineIsValid(String line){
-	if ( (line.trim().startsWith("//")) || (line.trim().startsWith("/*")) || (line.trim().startsWith("*")) ) {
-		return false;
-	}else{
-		return true;
-	}
-    }
+		if ( (line.trim().startsWith("//")) || (line.trim().startsWith("/*")) || (line.trim().startsWith("*")) ) {
+			return false;
+		}else{
+			return true;
+		}
+    }	
     
     /*
      * @param line, string to be checked if its the beginning of method. 
      * @return true if line is the beginning of a method, false otherwise.
      */
     public boolean isMethod(String line){
-	if ( (line.trim().startsWith("public")) || (line.trim().startsWith("private")) || (line.trim().startsWith("protected")) ){
-	    return true;
-	}else{
-	    return false;
-	}
+		if ( (line.trim().startsWith("public")) || (line.trim().startsWith("private")) || (line.trim().startsWith("protected")) ){
+			Pattern p = Pattern.compile("\\(([^)]+)\\)");
+			Matcher m = p.matcher(line);
+
+			if (m.find()){
+				return true;
+			}else{
+				return false;
+			}
+
+		}
+		return false;
     }
 
     
@@ -84,32 +90,32 @@ public class ReadFiles{
      * @return number of class types that are created by the'new' constructor. 
      */
     public int countNewConstructorType(File file){
-	String line;
-	String[] words;
-	int count = 0;
-	int index = 0;
+		String line;
+		String[] words;
+		int count = 0;
+		int index = 0;
 
-	if (checkIsFile(file)){
-	    try{
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		while ( (line = reader.readLine()) != null){
-		    if (lineIsValid(line)){
-			words = line.split(" ");
-			Matcher m  = Pattern.compile("new | [(]new").matcher(line);
-			while(m.find()){
-			    count++;
+		if (checkIsFile(file)){
+	    	try{
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			while ( (line = reader.readLine()) != null){
+		    	if (lineIsValid(line)){
+					words = line.split(" ");
+					Matcher m  = Pattern.compile("new | [(]new").matcher(line);
+					while(m.find()){
+			    	count++;
+					}
+		    	}		    
 			}
-		    }		    
-		}
 		
-	    }catch (Exception e){
-		System.out.println(e);
-	    }
+	    	}catch (Exception e){
+				System.out.println(e);
+	    	}
 	    
-	}else{
-	    System.out.println("This is not a file");
-	}
-	return count;
+		}else{
+	    	System.out.println("This is not a file");
+		}
+		return count;
     }
 
     /*

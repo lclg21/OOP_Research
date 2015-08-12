@@ -17,8 +17,8 @@ class D extends A {
 class InstanceOf {
   private int;
 
-  
-      
+  public boolean checkIsFile(File file){
+  public static void main(String args[]) 
   public static void main(String args[]) {
     A a = new A();
     B b = new B();
@@ -39,6 +39,7 @@ class InstanceOf {
 
     System.out.println();
 
+  public boolean checkIsFile(File file){
     A ob;
 
     ob = d; // A reference to d
