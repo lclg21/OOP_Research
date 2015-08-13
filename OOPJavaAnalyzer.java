@@ -29,7 +29,7 @@ public class OOPJavaAnalyzer{
 	    	myClassArray.add(classType);
 		}
      
-		System.out.println(myClassArray);
+		//System.out.println(myClassArray);
     }
     
     /*
@@ -124,35 +124,36 @@ public class OOPJavaAnalyzer{
      * @return number of times there is a casting to a class
      */
     public int countInstanceOfClassType(File file){
-	int count = 0;
-	String line;
-	String words[];
+		int count = 0;
+		String line;
+		String words[];
 
-	if (checkIsFile(file)){
-	    try{
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-                while ( (line = reader.readLine()) != null){
+		if (checkIsFile(file)){
+	    	try{
+				BufferedReader reader = new BufferedReader(new FileReader(file));
+            	while ( (line = reader.readLine()) != null){
                     if (lineIsValid(line)){
-			words = line.split(" ");
-			Matcher m  = Pattern.compile("instanceof").matcher(line);
+						words = line.split(" ");
+						Matcher m  = Pattern.compile("instanceof").matcher(line);
                         while(m.find()){
                             count++;
                         }
-		    }
+		    		}
+				}
+	    	}catch (Exception e){
+				System.out.println(e);
+	    	}
+		}else{
+	    	System.out.println("This is not a file");
 		}
-	    }catch (Exception e){
-		System.out.println(e);
-	    }
-	}else{
-	    System.out.println("This is not a file");
-	}
-	return count;
+		return count;
     }
 
     public int countClassTypesAsParameters(File file){
 		int count = 0;	
         String line;
         String params[];
+        String[] type;
 	
         if (checkIsFile(file)){
             try{
@@ -169,9 +170,13 @@ public class OOPJavaAnalyzer{
 								for (int i = 0; i < params.length; i++){
 									if (Character.isUpperCase(params[i].charAt(0))){
 										count++;
+										type = params[i].split(" ");
+										addToClassArray(type[0]);
 									}else{
 										if (Character.isUpperCase(params[i].charAt(1))){
 											count++;
+											type = params[i].split(" ");
+											addToClassArray(type[1]);
 										}
 									}								
 								}	    
