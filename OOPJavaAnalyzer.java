@@ -199,21 +199,21 @@ public class OOPJavaAnalyzer{
 	
 		File inputFile  = new File(args[0]);
 
-		ReadFiles file = new ReadFiles();
+		OOPJavaAnalyzer analyzer = new OOPJavaAnalyzer();
   
-		System.out.println("new constructor class types: " + file.countNewConstructorType(inputFile));
-		System.out.println("instanceof class types:      " + file.countInstanceOfClassType(inputFile));
-		System.out.println("class types as parameters:   " + file.countClassTypesAsParameters(inputFile));
+		System.out.println("\nnew constructor class types: " + analyzer.countNewConstructorType(inputFile));
+		System.out.println("instanceof class types:      " + analyzer.countInstanceOfClassType(inputFile));
+		System.out.println("class types as parameters:   " + analyzer.countClassTypesAsParameters(inputFile) + "\n");
 	
-		int typeclass = file.countNewConstructorType(inputFile);
-		int instanceOfType = file.countInstanceOfClassType(inputFile);
-		int classTypesAsParam = file.countClassTypesAsParameters(inputFile);
+		int typeclass = analyzer.countNewConstructorType(inputFile);
+		int instanceOfType = analyzer.countInstanceOfClassType(inputFile);
+		int classTypesAsParam = analyzer.countClassTypesAsParameters(inputFile);
 	
 		int totalNumOfTypes = instanceOfType + classTypesAsParam + typeclass;
 
 		float percent = typeclass * 100f / totalNumOfTypes;
 
-		System.out.println(args[0] + " is " + percent + "% pure OOP Language");
+		System.out.println(args[0] + " is " + percent + "% pure OOP Language\n" );
     }
 
 }
