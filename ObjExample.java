@@ -28,7 +28,7 @@ class ObjExample
       String x;
 
       System.out.println ("obj1.i = " + obj1.i);
-      obj1.printStmnt ();
+      obj1.printStmnt();
       
       // creates second object from the ObjExample class
       // obj2 is an instance of the class ObjExample
@@ -38,7 +38,7 @@ class ObjExample
       System.out.println ("obj1.i = " + obj1.i);
       obj1.printStmnt ();
       System.out.println ("obj2.i = " + obj2.i);
-      obj2.printStmnt ();
+      obj2.printStmnt();
    }
    void printStmnt ()
    {

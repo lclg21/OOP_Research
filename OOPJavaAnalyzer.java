@@ -213,6 +213,7 @@ public class OOPJavaAnalyzer{
     	int count = 0;
     	String line;
     	String[] words;
+    	String newLine;
 
     	 if (checkIsFile(file)){
             try{
@@ -222,10 +223,10 @@ public class OOPJavaAnalyzer{
 						if ( !line.isEmpty() ){
 							if ( !line.contains("System") ){ 
 								if ( !line.contains("new") ){
-					 				line = removeLeadingWhiteSpace(line);
-					 				if ( Character.isUpperCase(line.charAt(0)) ){
+					 				newLine = removeLeadingWhiteSpace(line);
+					 				if ( (!newLine.isEmpty()) && (Character.isUpperCase(newLine.charAt(0))) ){
 					 					count++;
-					 					words = line.split(" ");
+					 					words = newLine.split(" ");
 					 					addToClassArray(words[0]);	
 					 				}
 					 			}
@@ -256,14 +257,15 @@ public class OOPJavaAnalyzer{
 
 		OOPJavaAnalyzer analyzer = new OOPJavaAnalyzer();
 
-		System.out.println("\nOOPJavaAnalyzer will analyze " + args[0] + " and will determine how pure OOP Language is\n" );
-  
+		System.out.println("\nOOPJavaAnalyzer will analyze " + args[0] + " and will determine the purity" );
+  		System.out.println("of the program as an Object Oriented Programming Language\n");
+
 		System.out.println("new constructor class types: " + analyzer.countNewConstructorType(inputFile));
 		System.out.println("instanceof class types:      " + analyzer.countInstanceOfClassType(inputFile));
 		System.out.println("casting to a class types:    " + analyzer.countCastingclassTypes(inputFile));
 		System.out.println("class types as parameters:   " + analyzer.countClassTypesAsParameters(inputFile) + "\n");
 
-		//System.out.println("Class Types used: "+ analyzer.myClassArray + "\n");
+		System.out.println("Class Types used: "+ analyzer.myClassArray + "\n");
 	
 		int typeclass = analyzer.countNewConstructorType(inputFile);
 		int instanceOfType = analyzer.countInstanceOfClassType(inputFile);
@@ -274,7 +276,7 @@ public class OOPJavaAnalyzer{
 
 		float percent = typeclass * 100f / totalNumOfTypes;
 
-		System.out.println("OOP purity: " + percent + "%");
+		System.out.println("OOP purity: " + percent + "%\n");
     }
 
 }
