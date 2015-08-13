@@ -17,6 +17,10 @@ class D extends A {
 class InstanceOf {
   private int;
 
+  Parent parent = child;
+
+  Child child2 = (Child) parent;
+
   public boolean checkIsFile(File file, String s){
   public static void main(String args[], int x) 
   public static void main(String args[], Integer y) {

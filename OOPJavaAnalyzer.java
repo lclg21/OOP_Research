@@ -85,6 +85,14 @@ public class OOPJavaAnalyzer{
 		return false;
     }
 
+    /*
+     * @param line, string to remove leading white space
+     */
+    public String removeLeadingWhiteSpace(String line){
+    	line = line.replaceAll("^\\s+", "");
+    	return line;
+    }
+
     
     /*
      * @param file, file to be read
@@ -120,8 +128,8 @@ public class OOPJavaAnalyzer{
     }
 
     /*
-     * @param file, file to be read to check if there is any casting as a class
-     * @return number of times there is a casting to a class
+     * @param file, file to be read
+     * @return number of times there is an instanceof being used in code. 
      */
     public int countInstanceOfClassType(File file){
 		int count = 0;
@@ -149,6 +157,10 @@ public class OOPJavaAnalyzer{
 		return count;
     }
 
+    /*
+     * @param file, file to be read 
+     * @return the number of times there is a class type passed as a parameter
+     */
     public int countClassTypesAsParameters(File file){
 		int count = 0;	
         String line;
@@ -193,6 +205,44 @@ public class OOPJavaAnalyzer{
         return count;
     }
 
+    /*
+	 * @param file, file to be read
+	 * @return the amount of times there is a casting to a class type
+	 */
+    public int countCastingclassTypes(File file){
+    	int count = 0;
+    	String line;
+    	String[] words;
+
+    	 if (checkIsFile(file)){
+            try{
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                while ( (line = reader.readLine()) != null){
+                    if (lineIsValid(line)){
+						if ( !line.isEmpty() ){
+							if ( !line.contains("System") ){ 
+								if ( !line.contains("new") ){
+					 				line = removeLeadingWhiteSpace(line);
+					 				if ( Character.isUpperCase(line.charAt(0)) ){
+					 					count++;
+					 					words = line.split(" ");
+					 					addToClassArray(words[0]);	
+					 				}
+					 			}
+					 		}
+						}
+                    }
+                }
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }else{
+            System.out.println("This is not a file");
+        }
+        return count;
+
+    }
+
 
     public static void main(String[] args){
 	    
@@ -205,22 +255,26 @@ public class OOPJavaAnalyzer{
 		File inputFile  = new File(args[0]);
 
 		OOPJavaAnalyzer analyzer = new OOPJavaAnalyzer();
+
+		System.out.println("\nOOPJavaAnalyzer will analyze " + args[0] + " and will determine how pure OOP Language is\n" );
   
-		System.out.println("\nnew constructor class types: " + analyzer.countNewConstructorType(inputFile));
+		System.out.println("new constructor class types: " + analyzer.countNewConstructorType(inputFile));
 		System.out.println("instanceof class types:      " + analyzer.countInstanceOfClassType(inputFile));
+		System.out.println("casting to a class types:    " + analyzer.countCastingclassTypes(inputFile));
 		System.out.println("class types as parameters:   " + analyzer.countClassTypesAsParameters(inputFile) + "\n");
+
+		//System.out.println("Class Types used: "+ analyzer.myClassArray + "\n");
 	
 		int typeclass = analyzer.countNewConstructorType(inputFile);
 		int instanceOfType = analyzer.countInstanceOfClassType(inputFile);
 		int classTypesAsParam = analyzer.countClassTypesAsParameters(inputFile);
-	
-		int totalNumOfTypes = instanceOfType + classTypesAsParam + typeclass;
+		int castType = analyzer.countCastingclassTypes(inputFile);
+
+		int totalNumOfTypes = instanceOfType + castType + classTypesAsParam + typeclass;
 
 		float percent = typeclass * 100f / totalNumOfTypes;
 
-		System.out.println(args[0] + " is " + percent + "% pure OOP Language\n" );
+		System.out.println("OOP purity: " + percent + "%");
     }
 
 }
-
-
