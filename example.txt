@@ -29,9 +29,9 @@ class InstanceOf {
     C c = new C();
     D d = new D();
 
-    if (a instanceof A)
+    if (a instanceof F)
       System.out.println("a is instance of A");
-    if (b instanceof B)
+    if (b instanceof G )
       System.out.println("b is instance of B");
     if (c instanceof C)
       System.out.println("c is instance of C");

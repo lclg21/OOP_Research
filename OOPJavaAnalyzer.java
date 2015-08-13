@@ -86,11 +86,21 @@ public class OOPJavaAnalyzer{
     }
 
     /*
-     * @param line, string to remove leading white space
+     * @param line, string to remove leading whitespace
+     * @return new string without any leadin whitespace
      */
     public String removeLeadingWhiteSpace(String line){
     	line = line.replaceAll("^\\s+", "");
     	return line;
+    }
+
+    /*
+     * @param word, string to remove trailing parentheses
+     * @return new string without trailing parentheses
+     */
+    public String removeTrailingParentheses(String word){
+    	word = word.substring(0, word.length() - 1);
+    	return word;
     }
 
     
@@ -103,16 +113,22 @@ public class OOPJavaAnalyzer{
 		String[] words;
 		int count = 0;
 		int index = 0;
+		String newLine;
 
 		if (checkIsFile(file)){
 	    	try{
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ( (line = reader.readLine()) != null){
 		    	if (lineIsValid(line)){
-					words = line.split(" ");
+					//words = line.split(" ");
 					Matcher m  = Pattern.compile("new | [(]new").matcher(line);
 					while(m.find()){
-			    	count++;
+						count++;
+						newLine = removeLeadingWhiteSpace(line);
+						if (Character.isUpperCase(newLine.charAt(0)) && (!newLine.contains("System")) ){
+							words = newLine.split(" ");
+							addToClassArray(words[0]);
+						}
 					}
 		    	}		    
 			}
@@ -135,6 +151,7 @@ public class OOPJavaAnalyzer{
 		int count = 0;
 		String line;
 		String words[];
+		String newLine;
 
 		if (checkIsFile(file)){
 	    	try{
@@ -145,6 +162,20 @@ public class OOPJavaAnalyzer{
 						Matcher m  = Pattern.compile("instanceof").matcher(line);
                         while(m.find()){
                             count++;
+                            newLine = removeLeadingWhiteSpace(line);
+                            if(!newLine.contains("System")){
+                            	words = newLine.split(" ");
+                            	for (int i = 0; i < words.length; i++){
+                            		if (words[i].contains("instanceof")){
+                            			if (words[i + 1].contains(")")){	
+                            				String newWord = removeTrailingParentheses(words[i + 1]);
+                            				addToClassArray(newWord);
+                            			}else{
+                            				addToClassArray(words[i + 1]);
+                            			}
+                            		}
+                            	}
+                            }
                         }
 		    		}
 				}
