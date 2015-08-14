@@ -304,6 +304,7 @@ public class OOPJavaAnalyzer{
 		int castType = analyzer.countCastingclassTypes(inputFile);
 
 		int totalNumOfTypes = instanceOfType + castType + classTypesAsParam + typeclass;
+		//int overAllNumOfTypes;
 
 		float percent = typeclass * 100f / totalNumOfTypes;
 
